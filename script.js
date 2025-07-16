@@ -2,6 +2,7 @@ document.addEventListener("DOMContentLoaded", () => {
   fetchShifts();
   fetchLeaves();
   initDarkMode();
+  loadEmployees();
 });
 
 function fetchShifts() {
@@ -109,5 +110,22 @@ function addShift() {
   .catch(() => {
     document.getElementById("shiftError").innerText = "Failed to add shift.";
   });
+}
+
+async function loadEmployees() {
+  const nameSelect = document.getElementById('employeesdata');
+  try {
+    const res = await fetch('http://localhost:3000/api/employees');
+    const employees = await res.json();
+    nameSelect.innerHTML = '<option value="">Select Employee</option>';
+    employees.forEach(emp => {
+      const opt = document.createElement('option');
+      opt.value = emp.id;
+      opt.textContent = emp.username; // Display username in dropdown
+      nameSelect.appendChild(opt);
+    });
+  } catch (e) {
+    nameSelect.innerHTML = '<option value="">Failed to load employees</option>';
+  }
 }
 
