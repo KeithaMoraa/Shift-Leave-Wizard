@@ -9,10 +9,13 @@ app.use(cors());
 app.use(express.json());
 
 // Connect to MySQL
+// consoles_> myslq workbench., tableplus, mysql cli
+// Ensure you have a database named 'planner' and tables 'shifts' and 'leave_requests'
+// You can create them using the following SQL commands:
 const db = mysql.createConnection({
   host: "localhost",
   user: "root",
-  password: "", // your MySQL password if any
+  password: "Terer.0308$", // your MySQL password if any
   database: "planner"
 });
 
@@ -28,6 +31,16 @@ db.connect(err => {
 app.get("/api/shifts", (req, res) => {
   db.query("SELECT * FROM shifts", (err, results) => {
     if (err) return res.status(500).send("Error fetching shifts");
+    res.json(results);
+  });
+});
+
+
+// get all employees
+app.get("/api/employees", (req, res) => {
+  db.query("SELECT * FROM users", (err, results) => {
+    if (err) return res.status(500).send("Error fetching employees");
+    console.log("Fetched employees:", results); // Debugging line
     res.json(results);
   });
 });

@@ -1,0 +1,15 @@
+
+# ignore node modules
+
+node_modules/
+# ignore logs
+logs/
+npm-debug.log*
+# ignore environment variables
+.env
+# ignore database files
+*.sql
+# ignore IDE specific files
+.idea/
+# ignore OS specific files
+.DS_Store  
