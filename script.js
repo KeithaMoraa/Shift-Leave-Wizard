@@ -44,7 +44,7 @@ function fetchLeaves() {
 }
 
 function applyLeave() {
-  const name = document.getElementById("name").value.trim();
+  const name = document.getElementById("employeesdata").value.trim();
   const startDate = document.getElementById("startDate").value;
   const endDate = document.getElementById("endDate").value;
   const reason = document.getElementById("reason").value.trim();
@@ -62,7 +62,7 @@ function applyLeave() {
   .then(res => res.json())
   .then(() => {
     document.getElementById("leaveError").innerText = "";
-    document.getElementById("name").value = "";
+    document.getElementById("employeesdata").value = "";
     document.getElementById("startDate").value = "";
     document.getElementById("endDate").value = "";
     document.getElementById("reason").value = "";
