@@ -1,21 +1,30 @@
 const express = require("express");
 const mysql = require("mysql2");
 const cors = require("cors");
+const jwt = require("jsonwebtoken");
+const path = require("path");
 
 const app = express();
 const port = 3000;
 
+const JWT_SECRET = "24880fc78ab28a8d0c25c98079c446afbe15441f43823bb17bc9041a25671202836d9e6ff4c85e9ceaf8230bc5f07386e23071c691ded5cd8bba899af9e2df67";
 app.use(cors());
 app.use(express.json());
 
-// Connect to MySQL
-// consoles_> myslq workbench., tableplus, mysql cli
-// Ensure you have a database named 'planner' and tables 'shifts' and 'leave_requests'
-// You can create them using the following SQL commands:
+// Serve login.html as default page
+app.get("/", (req, res) => {
+  res.sendFile(path.join(__dirname, "login.html"));
+});
+
+// Serve static files (must come AFTER the "/" route above)
+app.use(express.static(path.join(__dirname)));
+
+
+// Connect to MySQL database
 const db = mysql.createConnection({
   host: "localhost",
   user: "root",
-  password: "", // your MySQL password if any
+  password: "Terer.0308$",
   database: "planner"
 });
 
@@ -25,6 +34,41 @@ db.connect(err => {
   } else {
     console.log("✅ Connected to MySQL");
   }
+});
+
+// Login API (returns JWT token)
+app.post("/api/login", (req, res) => {
+  const { email, password } = req.body;
+  if (!email || !password) {
+    return res.status(400).send("Email and password are required");
+  }
+  const sql = "SELECT * FROM users WHERE email = ? AND password = ?";
+  db.query(sql, [email, password], (err, results) => {
+    if (err) return res.status(500).send("Database error");
+    if (results.length === 0) return res.status(401).send("Invalid credentials");
+    const user = { id: results[0].id, email: results[0].email, is_admin: results[0].is_admin };
+    const token = jwt.sign(user, JWT_SECRET, { expiresIn: "2h" });
+    res.json({ message: "Login successful", token, user });
+  });
+});
+
+// Middleware to protect routes using Bearer token
+function requireAuth(req, res, next) {
+  const authHeader = req.headers.authorization;
+  if (!authHeader || !authHeader.startsWith("Bearer ")) {
+    return res.status(401).send("Unauthorized");
+  }
+  const token = authHeader.split(" ")[1];
+  jwt.verify(token, JWT_SECRET, (err, user) => {
+    if (err) return res.status(403).send("Invalid token");
+    req.user = user;
+    next();
+  });
+}
+
+// Protect main.html
+app.get("/main.html", requireAuth, (req, res) => {
+  res.sendFile(path.join(__dirname, "main.html"));
 });
 
 // Get all shifts
