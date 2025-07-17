@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Shift & Leave Planner</title>
+  <link rel="stylesheet" href="styles.css" />
+</head>
+
+<body>
+   <div class="profile-bar">
+        <div>
+            <h1 class="admin-title">Employee Dashboard</h1>
+        </div>
+        <div class="profile-info">
+            <span id="userProfile"></span>
+            <div class="logout-btn"><button id="logoutBtn" onclick="logout()">Logout</button></div>
+        </div>
+       
+    </div>
+    <hr>
+  <div class="container">
+    <button onclick="toggleDark()" style="float:right">🌓</button>
+    <h2>Welcome to the Leave Planner</h2>
+
+    <h3>Apply for Leave</h3>
+    <div class="form-group">
+      <label for="employeelist">Select Employee:</label>
+      <select id="employeelist"></select>
+      <button onclick="loadEmployeeNames()">Refresh</button>
+    </div>
+
+    <input type="date" id="startDate" />
+    <input type="date" id="endDate" />
+    <textarea id="reason" placeholder="Reason (optional)"></textarea>
+    <button onclick="applyLeave()">Submit Leave Request</button>
+    <p class="error" id="leaveError"></p>
+
+  </div>
+  <script src="script.js"></script>
+</body>
+
+</html>
