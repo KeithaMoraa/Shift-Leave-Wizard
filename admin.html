@@ -1,70 +1,79 @@
 <!DOCTYPE html>
 <html lang="en">
-
-<head>
+  <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Shift & Leave Planner</title>
     <link rel="stylesheet" href="styles.css" />
-</head>
+  </head>
 
-<body>
+  <body>
     <div class="profile-bar">
-        <div>
-            <h1 class="admin-title">Admin Dashboard</h1>
+      <div>
+        <h1 class="admin-title">Admin Dashboard</h1>
+      </div>
+      <div class="profile-info">
+        <span id="userProfile"></span>
+        <div class="logout-btn">
+          <button id="logoutBtn" onclick="logout()">Logout</button>
         </div>
-        <div class="profile-info">
-            <span id="userProfile"></span>
-            <div class="logout-btn"><button id="logoutBtn" onclick="logout()">Logout</button></div>
-        </div>
-       
+      </div>
     </div>
-    <hr>
+    <hr />
     <div class="container">
-        <button onclick="toggleDark()" style="float:right">🌓</button>
-        <h2>Welcome to the Leave Planner</h2>
+      <button onclick="toggleDark()" style="float: right">🌓</button>
+      <h2>Welcome to the Leave Planner</h2>
 
-        <h3>Apply for Leave</h3>
-        <div class="form-group">
-            <label for="employeelist">Select Employee:</label>
-            <select id="employeelist"></select>
-            <button onclick="loadEmployeeNames()">Refresh</button>
+      <h3>Apply for Leave</h3>
+      <div class="form-group">
+        <div class="label" style="margin-bottom: 10px; padding: 2px">
+          <label for="employeelist">Select Employee:</label>
         </div>
+        <select
+          id="employeelist"
+          style="width: 100%; padding: 5px; margin-bottom: 10px"
+        >
+          <option style="background-color: #e91e63" disabled selected>
+            Select an employee
+          </option>
+        </select>
+      </div>
 
-        <input type="date" id="startDate" />
-        <input type="date" id="endDate" />
-        <textarea id="reason" placeholder="Reason (optional)"></textarea>
-        <button onclick="applyLeave()">Submit Leave Request</button>
-        <p class="error" id="leaveError"></p>
+      <label for="startDate" style="margin: 3px">Start Date:</label>
+      <input type="date" id="startDate" />
+      <label for="endDate" style="margin: 3px">End Date:</label>
+      <input type="date" id="endDate" />
+      <label for="leaveType">Reason:</label>
+      <textarea id="reason" placeholder="Reason (optional)"></textarea>
+      <button onclick="applyLeave()">Submit Leave Request</button>
+      <p class="error" id="leaveError"></p>
 
-        <h3>Upcoming Shifts</h3>
-        <table id="shiftTable">
-            <tr>
-                <th>Date</th>
-                <th>Shift</th>
-            </tr>
-        </table>
+      <h3>Leave Requests</h3>
+      <table id="leaveTable">
+        <tr>
+          <th>Name</th>
+          <th>From</th>
+          <th>To</th>
+          <th>Status</th>
+          <th>Action</th>
+        </tr>
+      </table>
+      <h3>Add Shift</h3>
+      <input type="text" id="shiftName" placeholder="Employee Name" />
+      <input type="date" id="shiftDate" />
+      <input type="text" id="shiftTime" placeholder="e.g. 9AM - 5PM" />
+      <button onclick="addShift()">Add Shift</button>
+      <p class="error" id="shiftError"></p>
 
-        <h3>Leave Requests</h3>
-        <table id="leaveTable">
-            <tr>
-                <th>Name</th>
-                <th>From</th>
-                <th>To</th>
-                <th>Status</th>
-            </tr>
-        </table>
-        <h3>Add Shift</h3>
-        <input type="text" id="shiftName" placeholder="Employee Name" />
-        <input type="date" id="shiftDate" />
-        <input type="text" id="shiftTime" placeholder="e.g. 9AM - 5PM" />
-        <button onclick="addShift()">Add Shift</button>
-        <p class="error" id="shiftError"></p>
-
-
+      <h3>Upcoming Shifts</h3>
+      <table id="shiftTable">
+        <tr>
+          <th>Date</th>
+          <th>Shift</th>
+        </tr>
+      </table>
     </div>
 
     <script src="script.js"></script>
-</body>
-
+  </body>
 </html>

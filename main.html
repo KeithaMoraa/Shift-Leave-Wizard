@@ -1,44 +1,63 @@
 <!DOCTYPE html>
 <html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Shift & Leave Planner</title>
+    <link rel="stylesheet" href="styles.css" />
+  </head>
 
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Shift & Leave Planner</title>
-  <link rel="stylesheet" href="styles.css" />
-</head>
-
-<body>
-   <div class="profile-bar">
-        <div>
-            <h1 class="admin-title">Employee Dashboard</h1>
+  <body>
+    <div class="profile-bar">
+      <div>
+        <h1 class="admin-title">Employee Dashboard</h1>
+      </div>
+      <div class="profile-info">
+        <span id="userProfile"></span>
+        <div class="logout-btn">
+          <button id="logoutBtn" onclick="logout()">Logout</button>
         </div>
-        <div class="profile-info">
-            <span id="userProfile"></span>
-            <div class="logout-btn"><button id="logoutBtn" onclick="logout()">Logout</button></div>
+      </div>
+    </div>
+    <hr />
+    <div class="container">
+      <button onclick="toggleDark()" style="float: right">🌓</button>
+      <h2>Welcome to the Leave Planner</h2>
+
+      <h3>Apply for Leave</h3>
+      <div class="form-group">
+        <div class="label" style="margin-bottom: 10px; padding: 2px">
+          <label for="employeelist">Select Employee:</label>
         </div>
-       
+        <select
+          id="employeelist"
+          style="width: 100%; padding: 5px; margin-bottom: 10px"
+        >
+          <option style="background-color: #e91e63" disabled selected>
+            Select an employee
+          </option>
+        </select>
+      </div>
+
+      <label for="startDate" style="margin: 3px">Start Date:</label>
+      <input type="date" id="startDate" />
+      <label for="endDate" style="margin: 3px">End Date:</label>
+      <input type="date" id="endDate" />
+      <label for="leaveType">Reason:</label>
+      <textarea id="reason" placeholder="Reason (optional)"></textarea>
+      <button onclick="applyLeave()">Submit Leave Request</button>
+      <p class="error" id="leaveError"></p>
+
+      <h3>Leave Requests</h3>
+      <table id="leaveTable">
+        <tr>
+          <th>Name</th>
+          <th>From</th>
+          <th>To</th>
+          <th>Status</th>
+        </tr>
+      </table>
     </div>
-    <hr>
-  <div class="container">
-    <button onclick="toggleDark()" style="float:right">🌓</button>
-    <h2>Welcome to the Leave Planner</h2>
-
-    <h3>Apply for Leave</h3>
-    <div class="form-group">
-      <label for="employeelist">Select Employee:</label>
-      <select id="employeelist"></select>
-      <button onclick="loadEmployeeNames()">Refresh</button>
-    </div>
-
-    <input type="date" id="startDate" />
-    <input type="date" id="endDate" />
-    <textarea id="reason" placeholder="Reason (optional)"></textarea>
-    <button onclick="applyLeave()">Submit Leave Request</button>
-    <p class="error" id="leaveError"></p>
-
-  </div>
-  <script src="script.js"></script>
-</body>
-
+    <script src="script.js"></script>
+  </body>
 </html>
